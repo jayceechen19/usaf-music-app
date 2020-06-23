@@ -1,0 +1,24 @@
+GOALS:
+Download music data for a single artist (of your choosing) and create the following endpoints for your API
+    List all songs
+    Find song by id
+    Find songs by name
+    Find songs by album id (collection id)
+    Find songs by album name (collection name)
+    Update song information by id
+    Delete a song by id
+    Add a new song
+Add data for more than one artist then add the following endpoint
+    Find song by artist id
+    Find song by artist name
+Stretch goal...Add music video data for multiple artists and add the following endpoints
+    List all videos
+    Find video by id
+    Find video by name
+    Find video by album id (collection id)
+    Find songs by album name (collection name)
+    Update video information by id
+    Delete a video by id
+    Add a new video
+Stretch goal...Add more entities (for example, movie, podcast, audiobook, short film, etc.) and endpoints similar to the previous ones
+Stretch goal...Add a simple front end (React) that consumes this API. One cool feature to implement is to allow the user to preview a song, video, or other media.
