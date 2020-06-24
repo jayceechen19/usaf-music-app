@@ -126,21 +126,83 @@ app.get('/collectionname', (req,res) => {
 })
 //TODO:Update song information by id
 // /URL/:ParamName
-// name: Song name -> name: blah blah
+//{"id": 1440936016, "newName" : "blah blah"}
 //get to song information
-app.get('/updatename/:name', (req, res) => {
+app.post('/updatename', (req, res) => {
+    var name = req.body.newName
+    var id = req.body.id
+    var songs = tsjson.results
     
+    if (!name || !id) {
+        res.send('Ensure format is "id": #####, "newArtist": ')
+    } else {
+        for (var song in songs) {
+            if (songs[song].trackId.toString() === id.toString()) {
+                songs[song].trackName = name
+                res.send('Song updated!')
+            }
+        }
+        res.send(`I'm broke! No id Found`)
+    }
 })
-//find ID
-//Based on query (name for now), update the information
-//Return a success message
-
-
-
+   
 
 //TODO:Delete a song by id
+//{"id": 1440936016}
+app.post('/deletesong', (req, res) => {
+    var id = req.body.id
+    var songs = tsjson.results
+    
+    if (!id) {
+        res.send('Ensure format is "id": #####')
+    } else {
+        for (var song in songs) {
+            if (songs[song].trackId.toString() === id.toString()) {
+                //songs = [{song1}, {song2}]
+                //get index
+                var index = songs.indexOf(songs[song])
+                //remove object @ index
+                songs.splice(index, 1)
+                res.send('Song deleted!')
+            }
+        }
+        res.send(`I'm broke! No id Found`)
+    }
+})
 //TODO: Add a new song
+/*
+{"trackId" : 12345, "trackName" : "Baby Shark", "collectionName" : "Doo Doo", "collectionId" : 12345, "artistName" : "Sharks"}
+ */
+app.post('/addsong', (req, res) => {
+    //id, name, album name, album id, artist
+    var id = req.body.trackId
+    var name = req.body.trackName
+    var albumName = req.body.collectionName
+    var albumId = req.body.collectionId
+    var artistName = req.body.artistName
 
+    var songs = tsjson.results
+    //If it's not in correct format
+    if (!id || !name || !albumName || !albumId || !artistName) {
+        res.send('Ensure format is correct')
+    } 
+    //If its is in the correct format, do this
+    else {
+        //Look through the entire array checking if Id exits
+        for (var song in songs) {
+            if (songs[song].trackId.toString() === id.toString()) {
+                //Id exists, send error
+                res.send('Song id already in collection!')
+            } 
+        } 
+        //OK, Id not found, add to song database
+       var newObject = {
+           "trackId": id, "trackName": name, "collectionName": albumName, "collectionId": albumId, "artistName": artistName 
+       } 
+       songs.push(newObject)
+       res.send("omg i cant believe you actually added a song!")
+    }
+})
 
 
 
